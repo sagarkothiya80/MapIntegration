@@ -20,6 +20,7 @@ const CustomBottomSheet = ({ visible, onDismiss, children }) => {
     }
   }, [visible]);
 
+  //panResponder to down the sheet
   const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: (_, gestureState) => gestureState.dy > 10,
