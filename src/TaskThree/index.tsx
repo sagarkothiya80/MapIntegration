@@ -24,41 +24,41 @@ const TaskThree = () => {
         )
     }
 
-    const renderItem = ({ item, index }) => {
+    const renderItem = ({ item }: any) => {
         return (
-            <View style={{ height: 70, padding: 10, width: 70, backgroundColor: getRandomColor(), margin: 10, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={styles.itemBody}>
                 <Text>{item}</Text>
             </View>
         )
     }
 
-    const renderDigitItem = ({ item, index }) => {
+    const renderDigitItem = ({ item }: any) => {
         return (
-            <View style={{ alignSelf: 'center', height: 50, padding: 10, width: '90%', backgroundColor: getRandomColor(), margin: 10, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={styles.digitItemBody}>
                 <Text>{item}</Text>
             </View>
         )
     }
 
-    const renderAlphabettem = ({ item, index }) => {
+    const renderAlphabettem = ({ item }: any) => {
         return (
-            <View style={{ height: 150, padding: 10, width: 150, backgroundColor: getRandomColor(), margin: 10, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={styles.alphabetsItemBody}>
                 <Text style={{ fontSize: 20 }}>{item}</Text>
             </View>
         )
     }
 
-    const renderFruitItem = ({ item, index }) => {
+    const renderFruitItem = ({ item }: any) => {
         return (
-            <View style={{ height: 100, padding: 10, width: 200, backgroundColor: getRandomColor(), margin: 10, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={styles.fruiteItemBody}>
                 <Text>{item}</Text>
             </View>
         )
     }
 
-    const renderImageItem = ({ item, index }) => {
+    const renderImageItem = ({ item }: any) => {
         return (
-            <View style={{ height: 400, padding: 10, width: 400, margin: 10, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={styles.imageItemBody}>
                 <Image source={{ uri: item }} style={{ height: '100%', width: '100%' }} />
             </View>
         )
@@ -68,7 +68,7 @@ const TaskThree = () => {
         return (
             <View>
                 <FlatList
-                    data={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,]}
+                    data={digits}
                     renderItem={renderItem}
                     horizontal
                 />
@@ -102,7 +102,7 @@ const TaskThree = () => {
 
     return (
         <View>
-            <TouchableOpacity style={{ height: 40, width: '100%', backgroundColor: "#E0F7FA", marginTop: 40 }}
+            <TouchableOpacity style={[styles.buttonBody, { backgroundColor: "#E0F7FA", }]}
                 onPress={() => {
                     setModalType('VERTICAL_LIST')
                     setVisibleListModal(true)
@@ -111,7 +111,7 @@ const TaskThree = () => {
                 <Text style={styles.buttonText}>Vertical List</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={{ height: 40, width: '100%', backgroundColor: "#FBE9E7", marginTop: 20 }}
+            <TouchableOpacity style={[styles.buttonBody, { backgroundColor: "#FBE9E7", }]}
                 onPress={() => {
                     setModalType('VERTICAL_LIST_LIMITED_ITEM')
                     setVisibleListModal(true)
@@ -120,7 +120,7 @@ const TaskThree = () => {
                 <Text style={styles.buttonText}>Vertical List with limited item</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={{ height: 40, width: '100%', backgroundColor: "#F0F4C3", marginTop: 20 }}
+            <TouchableOpacity style={[styles.buttonBody, { backgroundColor: "#F0F4C3", }]}
                 onPress={() => {
                     setModalType('HORIZONTAL_LIST')
                     setVisibleListModal(true)
@@ -145,6 +145,24 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: '#000',
         textAlign: 'center'
+    },
+    buttonBody: {
+        height: 40, width: '100%', marginTop: 20
+    },
+    imageItemBody: {
+        height: 400, padding: 10, width: 400, margin: 10, alignItems: 'center', justifyContent: 'center'
+    },
+    fruiteItemBody: {
+        height: 100, padding: 10, width: 200, backgroundColor: getRandomColor(), margin: 10, alignItems: 'center', justifyContent: 'center'
+    },
+    alphabetsItemBody: {
+        height: 150, padding: 10, width: 150, backgroundColor: getRandomColor(), margin: 10, alignItems: 'center', justifyContent: 'center'
+    },
+    digitItemBody: {
+        alignSelf: 'center', height: 50, padding: 10, width: '90%', backgroundColor: getRandomColor(), margin: 10, alignItems: 'center', justifyContent: 'center'
+    },
+    itemBody: {
+        height: 70, padding: 10, width: 70, backgroundColor: getRandomColor(), margin: 10, alignItems: 'center', justifyContent: 'center'
     }
 })
 
@@ -172,3 +190,5 @@ const imageUrls = [
     "https://picsum.photos/id/870/200/300?grayscale&blur=2",
     "https://picsum.photos/200/300.jpg",
 ];
+
+

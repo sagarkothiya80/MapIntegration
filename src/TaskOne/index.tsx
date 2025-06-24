@@ -49,51 +49,29 @@ const TaskOne = () => {
         };
     }, []);
 
-    // const trackLocation = () => {
-    //     Geolocation.getCurrentPosition(
-    //         pos => {
-    //             const { latitude, longitude } = pos.coords;
-    //             const newCoord = { latitude, longitude };
-    //             console.log('Location:', newCoord);
-
-    //             setCoords(prev => {
-    //                 const updated = [...prev, newCoord];
-    //                 saveRouteLocally(updated);
-    //                 return updated;
-    //             });
-
-    //             setCurrentRegion({
-    //                 latitude,
-    //                 longitude,
-    //                 latitudeDelta: 0.01,
-    //                 longitudeDelta: 0.01,
-    //             });
-    //         },
-    //         error => console.warn(error),
-    //         { enableHighAccuracy: true, timeout: 10000, maximumAge: 10000 }
-    //     );
-    // };
-
     const trackLocation = () => {
-        Geolocation.getCurrentPosition(pos => {
-            console.log('getCurrentPosition', pos)
-            const { latitude, longitude } = pos.coords;
-            const newCoord = { latitude, longitude };
-            console.log('Location:', newCoord);
+        Geolocation.getCurrentPosition(
+            pos => {
+                const { latitude, longitude } = pos.coords;
+                const newCoord = { latitude, longitude };
+                console.log('Location:', newCoord);
 
-            setCoords(prev => {
-                const updated = [...prev, newCoord];
-                saveRouteLocally(updated);
-                return updated;
-            });
+                setCoords(prev => {
+                    const updated = [...prev, newCoord];
+                    saveRouteLocally(updated);
+                    return updated;
+                });
 
-            setCurrentRegion({
-                latitude,
-                longitude,
-                latitudeDelta: 0.01,
-                longitudeDelta: 0.01,
-            });
-        });
+                setCurrentRegion({
+                    latitude,
+                    longitude,
+                    latitudeDelta: 0.01,
+                    longitudeDelta: 0.01,
+                });
+            },
+            error => console.warn(error),
+            { enableHighAccuracy: true, timeout: 10000, maximumAge: 10000 }
+        );
     };
 
     const startTracking = () => {
@@ -145,41 +123,27 @@ const TaskOne = () => {
         }
     }, [coords]);
 
-    console.log('currentRegion', currentRegion)
-    console.log('coords', coords)
-
     return (
         <View style={{ flex: 1 }}>
             <MapView
-                //  ref={mapRef}
+                ref={mapRef}
                 style={styles.map}
+                initialRegion={currentRegion}
                 region={currentRegion}
-                provider='google'
-            // ref={mapRef}
-            // style={styles.map}
-            // initialRegion={currentRegion}
-            // region={currentRegion}
-            // provider="google"
-            // showsUserLocation={true}
-            // followsUserLocation={true}
+                provider="google"
+                showsUserLocation={true}
+                followsUserLocation={true}
             >
-                {/* {coords.length > 0 && ( */}
-                <Polyline
-                    coordinates={mapListCor}
-                    strokeColor="#000"
-                    strokeColors={[
-                        '#7F0866',
-                    ]}
-                    strokeWidth={6}
-                />
-
-                {/* <Polyline
-                            coordinates={mapListCor}
+                {coords.length > 0 && (
+                    <>
+                        <Polyline
+                            coordinates={coords}
                             strokeColor="#FF0000"
                             strokeWidth={4}
-                        /> */}
-                {/* <Marker coordinate={coords[coords.length - 1]} /> */}
-                {/* )} */}
+                        />
+                        <Marker coordinate={coords[coords.length - 1]} />
+                    </>
+                )}
             </MapView>
 
             <View style={styles.footer}>
@@ -224,13 +188,3 @@ const styles = StyleSheet.create({
         color: '#000',
     },
 });
-
-
-const mapListCor = [
-    { latitude: '21.213061', longitude: '72.883779', },
-    { latitude: '21.214742', longitude: '72.888643', },
-    { latitude: '21.224251', longitude: '72.885678', },
-    { latitude: '21.228390', longitude: '72.894963', },
-    { latitude: '21.237463', longitude: '72.889760', },
-    { latitude: '21.241894', longitude: '72.881058', }
-]

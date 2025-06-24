@@ -3,19 +3,18 @@ import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import MapView, { Marker, Polyline } from 'react-native-maps';
+import { API_KEY } from '../../utils/Utils';
 
-const PlaceFinder = ({ route }) => {
+const PlaceFinder = ({ route }: any) => {
     const { startPoint, endPoint } = route.params;
-    const mapRef = useRef(null);
-    console.log('startPoint param', startPoint)
-    console.log('endPoint param', endPoint)
+    const mapRef: any = useRef(null);
 
     const [coords, setCoords] = useState([
         { latitude: startPoint.lat, longitude: startPoint.lng },
         { latitude: endPoint.lat, longitude: endPoint.lng }
     ]);
 
-    const [currentRegion, setCurrentRegion] = useState({
+    const [currentRegion] = useState({
         latitude: startPoint.lat,
         longitude: startPoint.lng,
         latitudeDelta: 0.01,
@@ -24,8 +23,6 @@ const PlaceFinder = ({ route }) => {
 
 
     useEffect(() => {
-        const API_KEY = 'AIzaSyC1JGc-xX3lFEzCId2g3HQcKv1gpE7Oejo'
-
         const URL = `https://maps.googleapis.com/maps/api/directions/json?origin=${startPoint.lat},${startPoint.lng}&destination=${endPoint.lat},${endPoint.lng}&key=${API_KEY}`
         axios.get(URL).then(res => {
             const steps = res.data.routes[0].legs[0].steps
@@ -33,7 +30,7 @@ const PlaceFinder = ({ route }) => {
             const routeCoords = [];
             routeCoords.push({ latitude: startPoint.lat, longitude: startPoint.lng });
 
-            steps.map((item) => {
+            steps.map((item: any) => {
                 routeCoords.push({
                     latitude: item.start_location.lat,
                     longitude: item.start_location.lng,
@@ -44,7 +41,6 @@ const PlaceFinder = ({ route }) => {
                 });
             })
             routeCoords.push({ latitude: endPoint.lat, longitude: endPoint.lng });
-            console.log('routeCoords', routeCoords)
             setCoords(routeCoords)
 
         });
@@ -66,15 +62,9 @@ const PlaceFinder = ({ route }) => {
         }
     }, [startPoint, endPoint, mapRef]);
 
-    console.log(' place finder coords', coords)
     return (
         <View style={{ flex: 1 }}>
-            <Text>PlaceFinder</Text>
             <MapView
-                // ref={mapRef}
-                // style={styles.map}
-                // region={currentRegion}
-                // provider='google'
                 ref={mapRef}
                 style={styles.map}
                 initialRegion={currentRegion}
@@ -100,7 +90,6 @@ const PlaceFinder = ({ route }) => {
     )
 }
 export default PlaceFinder
-
 
 const styles = StyleSheet.create({
     container: {

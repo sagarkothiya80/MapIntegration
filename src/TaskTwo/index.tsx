@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { View, Text, TextInput, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import { API_KEY } from '../../utils/Utils';
 
 const TaskTwo = () => {
     const [placeList, setPlaceList] = useState([])
@@ -12,10 +13,8 @@ const TaskTwo = () => {
     const [endPointLatLong, setEndPointLatLong] = useState(null)
     const [isShowPlaceList, setIsShowPlaceList] = useState(false)
 
-    const navigation = useNavigation();
+    const navigation: any = useNavigation();
 
-    console.log('searchType', searchType)
-    const API_KEY = 'AIzaSyC1JGc-xX3lFEzCId2g3HQcKv1gpE7Oejo'
     useEffect(() => {
         const input = searchType === 'Start' ? searchStartPoint : searchEndPoint
         axios.get(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&types=(regions)&key=${API_KEY}`).then(res => {
@@ -25,11 +24,7 @@ const TaskTwo = () => {
 
     }, [searchStartPoint, searchEndPoint, searchType])
 
-    console.log('startPointLatLong', startPointLatLong)
-    console.log('endPointLatLong', endPointLatLong)
-
-    const onPressLocation = (place_id) => {
-        console.log('place_id,', place_id)
+    const onPressLocation = (place_id: string) => {
         const URL = ` https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&fields=geometry&key=${API_KEY}`
 
         console.log(URL)
@@ -43,7 +38,7 @@ const TaskTwo = () => {
         });
     }
 
-    const renderItem = ({ item, index }) => {
+    const renderItem = ({ item }: any) => {
         return (
             <TouchableOpacity style={{ paddingVertical: 5, borderBottomWidth: 1, borderBottomColor: '#000' }}
                 onPress={() => {
@@ -61,11 +56,8 @@ const TaskTwo = () => {
         )
     }
 
-    console.log('placeList', placeList)
-
     return (
-        <View style={{ padding: 20 }}>
-            <Text>Task2</Text>
+        <View style={styles.container}>
             <TextInput
                 placeholder="Search Start Point"
                 value={searchStartPoint}
@@ -95,14 +87,7 @@ const TaskTwo = () => {
                 }
             </View>
 
-            <TouchableOpacity style={{
-                height: 40,
-                width: '100%',
-                backgroundColor: 'blue',
-                marginTop: 40,
-                alignItems: 'center',
-                justifyContent: 'center'
-            }}
+            <TouchableOpacity style={styles.placeFinderButton}
                 onPress={() => {
                     if (startPointLatLong && endPointLatLong) {
                         navigation.navigate('PlaceFinder', {
@@ -112,7 +97,7 @@ const TaskTwo = () => {
                     }
                 }}
             >
-                <Text style={{ color: '#fff' }}>Confirm</Text>
+                <Text style={styles.confirmText}>Confirm</Text>
             </TouchableOpacity>
 
         </View>
@@ -124,8 +109,7 @@ export default TaskTwo
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20,
-        marginTop: 60,
+        padding: 20
     },
     input: {
         borderWidth: 1,
@@ -135,4 +119,15 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginTop: 10
     },
+    placeFinderButton: {
+        height: 40,
+        width: '100%',
+        backgroundColor: 'blue',
+        marginTop: 40,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    confirmText: {
+        color: '#fff'
+    }
 })
