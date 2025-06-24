@@ -1,0 +1,67 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<!-- <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> -->
+<!-- <uses-permission android:name="android.permission.WAKE_LOCK" /> -->
+
+
+<!-- <uses-permission android:name="android.permission.VIBRATE" />
+<uses-permission android:name="android.permission.SET_WALLPAPER" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> -->
+
+
+<!-- <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> -->
+<!-- <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" tools:targetApi="m" /> -->
+
+
+    <application
+      android:name=".MainApplication"
+      android:label="@string/app_name"
+      android:icon="@mipmap/ic_launcher"
+      android:roundIcon="@mipmap/ic_launcher_round"
+      android:allowBackup="false"
+      android:theme="@style/AppTheme"
+      android:supportsRtl="true">
+      <activity
+        android:name=".MainActivity"
+        android:label="@string/app_name"
+        android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+        android:launchMode="singleTask"
+        android:windowSoftInputMode="adjustResize"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+      </activity>
+
+     <!-- <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBl8DW6f4qlVVBlwW1IOcg8E1m_pN6Tvto"/> -->
+     <!-- <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyC1JGc-xX3lFEzCId2g3HQcKv1gpE7Oejo"/> -->
+
+ <meta-data
+     android:name="com.google.android.geo.API_KEY"
+     android:value="AIzaSyAy0MUu6CCelySc748cju6TohmJKcitM9E"/>
+
+      <meta-data 
+      android:name="com.transistorsoft.locationmanager.license"
+       android:value="YOUR_LICENCE_KEY_HERE" />
+
+    <!-- <service
+    android:name="com.asterinet.react.bgactions.BackgroundService"
+    android:enabled="true"
+    android:exported="false" /> -->
+
+
+    <!-- <service
+        android:name="com.asterinet.react.bgactions.RNBackgroundActionsTask"
+        android:exported="false"
+        android:foregroundServiceType="location|mediaPlayback|dataSync"
+        android:permission="android.permission.BIND_JOB_SERVICE"
+        tools:replace="android:foregroundServiceType">
+    </service> -->
+
+    </application>
+</manifest>
