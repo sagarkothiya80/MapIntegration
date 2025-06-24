@@ -7,12 +7,9 @@ import BackgroundService from 'react-native-background-actions';
 const sleep = (time: number) => new Promise(resolve => setTimeout(resolve, time));
 
 const veryIntensiveTask = async (taskDataArguments: any) => {
-    // Example of an infinite loop task
     const { delay } = taskDataArguments;
     await new Promise(async (resolve) => {
-        console.log('Working in background...');
         for (let i = 0; BackgroundService.isRunning(); i++) {
-            console.log('Working in background...');
             await BackgroundService.updateNotification({ taskDesc: 'New ExampleTask description' }); // Only Android, iOS will ignore this call
             console.log(i);
             await sleep(delay);
@@ -36,11 +33,7 @@ const options = {
 
 export default function BackgroundExample() {
     const start = async () => {
-        console.log('start')
-
         if (!BackgroundService.isRunning()) {
-            console.log('inside start')
-
             await BackgroundService.start(veryIntensiveTask, options);
         }
     };
