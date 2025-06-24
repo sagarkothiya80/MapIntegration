@@ -13,6 +13,7 @@ const TaskThree = () => {
     const [visibleListModal, setVisibleListModal] = useState(false)
     const [modalType, setModalType] = useState<ModalTypeProp>()
 
+    //renderVerticalListOfItem to rending the vertical item in custom sheet
     const renderVerticalListOfItem = () => {
         return (
             <View>
@@ -24,14 +25,7 @@ const TaskThree = () => {
         )
     }
 
-    const renderItem = ({ item }: any) => {
-        return (
-            <View style={styles.itemBody}>
-                <Text>{item}</Text>
-            </View>
-        )
-    }
-
+    //renderDigitItem rending digit item
     const renderDigitItem = ({ item }: any) => {
         return (
             <View style={styles.digitItemBody}>
@@ -40,6 +34,7 @@ const TaskThree = () => {
         )
     }
 
+    //renderAlphabettem rending Alphabet item
     const renderAlphabettem = ({ item }: any) => {
         return (
             <View style={styles.alphabetsItemBody}>
@@ -48,6 +43,7 @@ const TaskThree = () => {
         )
     }
 
+    //renderFruitItem rending fruite item
     const renderFruitItem = ({ item }: any) => {
         return (
             <View style={styles.fruiteItemBody}>
@@ -56,10 +52,20 @@ const TaskThree = () => {
         )
     }
 
+    //renderImageItem rending image item
     const renderImageItem = ({ item }: any) => {
         return (
             <View style={styles.imageItemBody}>
                 <Image source={{ uri: item }} style={{ height: '100%', width: '100%' }} />
+            </View>
+        )
+    }
+
+    //renderItem to rending the vertical item in custom sheet
+    const renderItem = ({ item }: any) => {
+        return (
+            <View style={styles.itemBody}>
+                <Text>{item}</Text>
             </View>
         )
     }
@@ -91,6 +97,7 @@ const TaskThree = () => {
         )
     }
 
+    //render vertical and horizontal list
     const renderChildren = () => {
         if (modalType === 'VERTICAL_LIST' || modalType === 'VERTICAL_LIST_LIMITED_ITEM') {
             return renderVerticalListOfItem()

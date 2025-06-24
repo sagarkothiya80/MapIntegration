@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet, FlatList, TouchableOpacity } from 'r
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { API_KEY } from '../../utils/Utils';
+import { Colors } from '../../utils/Color';
 
 const TaskTwo = () => {
     const [placeList, setPlaceList] = useState([])
@@ -15,21 +16,22 @@ const TaskTwo = () => {
 
     const navigation: any = useNavigation();
 
+    //start and end point location searching by using open google place api
     useEffect(() => {
         const input = searchType === 'Start' ? searchStartPoint : searchEndPoint
-        axios.get(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&types=(regions)&key=${API_KEY}`).then(res => {
-            console.log('res', res)
+        const URL = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&types=(regions)&key=${API_KEY}`
+        axios.get(URL).then(res => {
             setPlaceList(res.data.predictions)
         });
 
     }, [searchStartPoint, searchEndPoint, searchType])
 
+    //onPressLocation to search location list click of get the actual latitude and longitude
     const onPressLocation = (place_id: string) => {
         const URL = ` https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&fields=geometry&key=${API_KEY}`
 
         console.log(URL)
         axios.get(URL).then(res => {
-            console.log('res', res)
             if (searchType === 'Start') {
                 setStartPointLatLong(res.data.result.geometry.location)
             } else {
@@ -38,6 +40,7 @@ const TaskTwo = () => {
         });
     }
 
+    //renderItem to rending the list of search location
     const renderItem = ({ item }: any) => {
         return (
             <TouchableOpacity style={{ paddingVertical: 5, borderBottomWidth: 1, borderBottomColor: '#000' }}
@@ -106,14 +109,13 @@ const TaskTwo = () => {
 export default TaskTwo
 
 
-
 const styles = StyleSheet.create({
     container: {
         padding: 20
     },
     input: {
         borderWidth: 1,
-        borderColor: '#aaa',
+        borderColor: Colors.color4,
         borderRadius: 8,
         padding: 10,
         fontSize: 16,
@@ -122,12 +124,12 @@ const styles = StyleSheet.create({
     placeFinderButton: {
         height: 40,
         width: '100%',
-        backgroundColor: 'blue',
+        backgroundColor: Colors.color5,
         marginTop: 40,
         alignItems: 'center',
         justifyContent: 'center'
     },
     confirmText: {
-        color: '#fff'
+        color: Colors.color6
     }
 })

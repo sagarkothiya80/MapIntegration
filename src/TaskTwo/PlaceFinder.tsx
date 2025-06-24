@@ -1,9 +1,10 @@
 
 import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import { API_KEY } from '../../utils/Utils';
+import { Colors } from '../../utils/Color';
 
 const PlaceFinder = ({ route }: any) => {
     const { startPoint, endPoint } = route.params;
@@ -21,12 +22,11 @@ const PlaceFinder = ({ route }: any) => {
         longitudeDelta: 0.01,
     });
 
-
+    // start and end point to get route json by using google open api
     useEffect(() => {
         const URL = `https://maps.googleapis.com/maps/api/directions/json?origin=${startPoint.lat},${startPoint.lng}&destination=${endPoint.lat},${endPoint.lng}&key=${API_KEY}`
         axios.get(URL).then(res => {
             const steps = res.data.routes[0].legs[0].steps
-            console.log('roite res', steps)
             const routeCoords = [];
             routeCoords.push({ latitude: startPoint.lat, longitude: startPoint.lng });
 
@@ -46,6 +46,7 @@ const PlaceFinder = ({ route }: any) => {
         });
     }, [])
 
+    // Fit map to route coords change
     useEffect(() => {
         if (mapRef?.current && coords?.length > 0) {
             setTimeout(() => {
@@ -63,7 +64,7 @@ const PlaceFinder = ({ route }: any) => {
     }, [startPoint, endPoint, mapRef]);
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={styles.container}>
             <MapView
                 ref={mapRef}
                 style={styles.map}
@@ -75,9 +76,9 @@ const PlaceFinder = ({ route }: any) => {
                 <>
                     <Polyline
                         coordinates={coords}
-                        strokeColor="#000"
+                        strokeColor={Colors.color8}
                         strokeColors={[
-                            '#7F0866',
+                            Colors.color7
                         ]}
                         strokeWidth={6}
                     />

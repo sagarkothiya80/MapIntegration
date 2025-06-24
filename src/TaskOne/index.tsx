@@ -11,6 +11,7 @@ import Geolocation from '@react-native-community/geolocation';
 import MapView, { Polyline, Marker } from 'react-native-maps';
 import BackgroundTimer from 'react-native-background-timer';
 import { saveRouteLocally, loadSavedRoute } from '../../utils/storage';
+import { Colors } from '../../utils/Color';
 
 const TaskOne = () => {
     const [coords, setCoords] = useState([]);
@@ -19,6 +20,7 @@ const TaskOne = () => {
     const mapRef = useRef(null);
     const [currentRegion, setCurrentRegion] = useState(null);
 
+    //requestPermissions - request the location permission
     const requestPermissions = async () => {
         if (Platform.OS === 'android') {
             await PermissionsAndroid.requestMultiple([
@@ -29,6 +31,7 @@ const TaskOne = () => {
         }
     };
 
+    //mount of call the requestPermissions and save and get location in storage
     useEffect(() => {
         requestPermissions();
         loadSavedRoute((loadedPath) => {
@@ -49,6 +52,7 @@ const TaskOne = () => {
         };
     }, []);
 
+    //trackLocation to get current location and save into local storage
     const trackLocation = () => {
         Geolocation.getCurrentPosition(
             pos => {
@@ -74,14 +78,15 @@ const TaskOne = () => {
         );
     };
 
+    //startTracking to start tracking the location
     const startTracking = () => {
         if (intervalRef.current) return;
-        console.log('Started tracking');
         trackLocation(); // first immediate call
         intervalRef.current = BackgroundTimer.setInterval(trackLocation, 5000);
         setIsTracking(true);
     };
 
+    //stopTracking to stop tracking the location
     const stopTracking = () => {
         if (intervalRef.current !== null) {
             console.log('Stopped tracking');
@@ -91,6 +96,7 @@ const TaskOne = () => {
         }
     };
 
+    //toggleTracking to handle the start and stop tracking in single button
     const toggleTracking = () => {
         isTracking ? stopTracking() : startTracking();
     };
@@ -138,7 +144,7 @@ const TaskOne = () => {
                     <>
                         <Polyline
                             coordinates={coords}
-                            strokeColor="#FF0000"
+                            strokeColor={Colors.color1}
                             strokeWidth={4}
                         />
                         <Marker coordinate={coords[coords.length - 1]} />
@@ -150,7 +156,7 @@ const TaskOne = () => {
                 <TouchableOpacity
                     style={[
                         styles.button,
-                        { backgroundColor: isTracking ? '#FBE9E7' : '#E0F7FA' },
+                        { backgroundColor: isTracking ? Colors.color2 : Colors.color3 },
                     ]}
                     onPress={toggleTracking}
                 >
